@@ -1,5 +1,4 @@
 老生常谈，正确使用memset
-2014年10月28日 11:21:00 MU_SZ 阅读数：95168更多
 个人分类： 又爱又恨的C++
 https://blog.csdn.net/my_business/article/details/40537653
 
@@ -55,5 +54,5 @@ BaseParameters* pars = &my_pars;
 //......
  
 MyParameters* my = dynamic_cast<MyParameters*>(pars);
-~~~c
+~~~
 程序运行到dynamic_cast时发生异常。原因其实也很容易发现，我们的目的是为了初始化数据结构MyParameters里的data和buf，正常来说需要初始化的内存空间是sizeof(int) * 3 * 2 = 24字节，但是使用memset直接初始化MyParameters类型的数据结构时，sizeof(my_pars)却是28字节，因为为了实现多态机制，C++对有虚函数的对象会包含一个指向虚函数表(V-Table)的指针，当使用memset时，会把该虚函数表的指针也初始化为0，而dynamic_cast也使用RTTI技术，运行时会使用到V-Table，可此时由于与V-Table的链接已经被破坏，导致程序发生异常。
