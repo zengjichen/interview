@@ -1,0 +1,63 @@
+
+#include <iostream>
+#include <cstdio>
+#include <vector>
+#include <cstring>
+using namespace std;
+const int MAXN = 10010;  //点数的最大值
+const int MAXM = 100010; //边数的最大值
+vector<int> G[MAXN];
+void addedge(int u,int v)
+{
+   G[u].push_back(v);
+}
+int  linker[MAXN];
+bool used[MAXN];
+bool dfs(int u)
+{
+     for(int i=0; i<G[u].size() ;i++)
+     {
+         int v=G[u][i];
+         if(!used[v])   //判断v这个点是否已匹配
+         {
+           used[v]=true;
+           if(linker[v] == -1 || dfs(linker[v])) //linker判断v这个点的连接对象
+           {                                     //递归的时候x走到y的一个地方就顺手标记了当前y。
+              linker[v] = u;
+              return true;
+           }
+        }
+    }
+    return false;
+}
+int hungary(int uN)        //传入x的所有点的个数
+{
+    int res=0;
+    memset(linker,-1,sizeof(linker));
+    for(int u=1;u<=uN;u++) //点的编号1~uN
+    {
+       memset(used,false,sizeof(used)); //每一次重新开始，就取消y中之前的标志
+       if(dfs(u))   res++;
+    }
+    return res;
+}
+int main()
+{
+    int n,m,k;
+    int ans=0;
+    scanf("%d%d%d",&n,&m,&k);
+    while(k--)
+    {
+        int u,v;
+        scanf("%d%d",&u,&v);
+        addedge(u,v);
+    }
+    ans=hungary(n);
+    printf("%d\n",ans);
+    return 0;
+
+--------------------- 
+作者：碳酸钙的01妖精 
+来源：CSDN 
+原文：https://blog.csdn.net/xigongdali/article/details/82810506?utm_source=copy 
+版权声明：本文为博主原创文章，转载请附上博文链接！
