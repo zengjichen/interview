@@ -15,3 +15,7 @@ https://blog.csdn.net/u012124438/article/details/70039943#comments
 
 规速
 https://blog.csdn.net/hguisu/article/details/7558249?utm_source=blogxgwz1
+
+
+dehaze 论文
+http://www.vision.ee.ethz.ch/en/ntire18/
